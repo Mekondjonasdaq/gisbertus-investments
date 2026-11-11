@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+
+  --color-ink-950: #050505;
+  --color-ink-900: #0a0a0b;
+  --color-ink-850: #101012;
+  --color-ink-800: #161619;
+  --color-ink-700: #202024;
+  --color-ink-600: #2c2c32;
+  --color-ink-500: #4a4a52;
+  --color-ink-400: #7b7b85;
+  --color-ink-300: #a8a8b2;
+  --color-ink-200: #d2d2d8;
+
+  /* Accent: showroom red (matches the dealership flyer). Change these 4 values to re-theme the whole site. */
+  --color-accent-300: #fca5a5;
+  --color-accent-400: #f87171;
+  --color-accent-500: #dc2626;
+  --color-accent-600: #b91c1c;
+
+  --shadow-card: 0 10px 30px -12px rgb(0 0 0 / 0.7);
+  --shadow-glow: 0 0 40px -8px rgb(220 38 38 / 0.55);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-road: road 0.9s linear infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes road {
+    from { background-position: 0 0; }
+    to { background-position: -96px 0; }
+  }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-ink-950 font-sans text-white antialiased;
+    margin: 0;
+    min-width: 320px;
+    overflow-x: clip;
+  }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  ::selection { background: var(--color-accent-500); color: #fff; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-ink-900); }
+  ::-webkit-scrollbar-thumb { background: var(--color-ink-600); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-accent-600); }
+  input, select, textarea, button { font: inherit; }
+  select option { background: #161619; color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-accent-400); outline-offset: 2px; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+  .btn-primary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-400 hover:shadow-glow disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-outline {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-accent-400 hover:text-accent-300 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-ink-200 transition-all duration-300 hover:bg-white/5 hover:text-white;
+  }
+  .btn-danger {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-red-600/90 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-red-500 disabled:opacity-50;
+  }
+  .btn-whatsapp {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110;
+  }
+
+  .card { @apply rounded-2xl border border-white/5 bg-ink-850 shadow-card transition-all duration-300; }
+  .card-hover { @apply hover:-translate-y-1 hover:border-accent-500/40; }
+
+  .input {
+    @apply w-full rounded-xl border border-white/10 bg-ink-800 px-4 py-3 text-base text-white sm:text-sm outline-none transition placeholder:text-ink-400 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20;
+  }
+  .label { @apply mb-1.5 block text-xs font-medium text-ink-300; }
+  .section-eyebrow { @apply text-sm font-semibold text-accent-400; }
+  .section-title { @apply mt-2 text-3xl font-semibold sm:text-4xl lg:text-5xl; }
+  .badge { @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold; }
+}
+
+/* One orchestrated scroll reveal used by the <Reveal> component */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
